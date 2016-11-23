@@ -587,6 +587,20 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
+* Use the `__MODULE__` pseudo variable when a module refers to itself. This
+  avoids having to update any self-references when the module name changes. If
+  you want a prettier name, set up an alias.
+
+  ```elixir
+  defmodule SomeProject.SomeModule do
+    alias __MODULE__, as: SomeModule
+
+    defstruct [:name]
+
+    def name(%SomeModule{name: name}), do: name
+  end
+  ```
+
 
 ### Documentation
 
