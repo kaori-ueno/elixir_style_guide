@@ -53,36 +53,45 @@ If you're looking for other projects to contribute to please see the
 [Hex package manager site][Hex].
 
 
-### Source Code Layout
+### Source Code Layout ソースコードの書き方
 
 <!-- TODO: Add crafty quote here -->
 
-* Use two **spaces** per indentation level.
+* インデントはタブではなく**スペース**2つで
+  Use two **spaces** per indentation level.
   No hard tabs.
 
   ```elixir
+  # 良くない例 - 4スペース
   # not preferred - four spaces
   def some_function do
       do_something
   end
 
+  # 良い例
   # preferred
   def some_function do
     do_something
   end
   ```
 
-* Use Unix-style line endings (\*BSD/Solaris/Linux/OSX users are covered by
+* 改行はUNIX系のものを利用する。
+  (\*BSD/Solaris/Linux/OSXではデフォルトのUNIX系の改行コードであるが、Windowsユーザは注意が必要)
+  Use Unix-style line endings (\*BSD/Solaris/Linux/OSX users are covered by
   default, Windows users have to be extra careful).
 
-* If you're using Git you might want to add the following configuration
+* gitを使っているなら、Windowsで改行コードが勝手に挿入されないように下記のような設定をするとよさそう。
+  If you're using Git you might want to add the following configuration
   setting to protect your project from Windows line endings creeping in:
 
   ```sh
-  git config --global core.autocrlf true
+  $ git config --global core.autocrlf true
   ```
 
-* Use spaces around operators, after commas, colons and semicolons.
+* 演算子の前後や、カンマ `,` 、コロン `:` 、セミコロン `;` の後はスペースを入れる。
+  カッコの内側にはスペースを入れない。
+  スペースは、Elixirの実行には(ほとんど)関係ないが、コードを読みやすくするために適切に利用するのが鍵となる。
+  Use spaces around operators, after commas, colons and semicolons.
   Do not put spaces around matched pairs like brackets, parentheses, etc.
   Whitespace might be (mostly) irrelevant to the Elixir runtime, but its proper
   use is the key to writing easily readable code.
@@ -93,7 +102,8 @@ If you're looking for other projects to contribute to please see the
   Enum.map(["one", <<"two">>, "three"], fn num -> IO.puts num end)
   ```
 
-* Use empty lines between `def`s to break up a function into logical
+* 論理的なまとまりごとに関数を分けるため、 `def` の間には空行を入れる。
+  Use empty lines between `def`s to break up a function into logical
   paragraphs.
 
   ```elixir
@@ -118,7 +128,8 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* ...but run single-line `def`s that match for the same function together.
+* ただし、1行 `def` で同じ関数のマッチングを記述する場合はまとめる
+  but run single-line `def`s that match for the same function together.
 
   ```elixir
   def some_function(nil), do: {:err, "No Value"}
@@ -128,7 +139,8 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* If you use the `do:` syntax with functions and the line that makes up the
+* 関数定義で `do:` を使いたいけど、関数本体の記述が長くなる場合は、下記のように1行で書かずに `do:` 以下を改行してインデントを下げる
+  If you use the `do:` syntax with functions and the line that makes up the
   function body is long, put the `do:` on a new line indented one level more
   than the previous line.
 
@@ -137,15 +149,18 @@ If you're looking for other projects to contribute to please see the
     do: Enum.map(args, fn(arg) -> arg <> " is on a very long line!" end)
   ```
 
+  複数の関数定義が並んでいるときに上記のような記述をする場合は、他の関数定義も `do:` 以下を改行しよう
   When you use the convention above and you have more than one function clause
   using the `do:` syntax, put the `do:` on a new line for each function clause:
 
   ```elixir
+  # 良くない例
   # not preferred
   def some_function([]), do: :empty
   def some_function(_),
     do: :very_long_line_here
 
+  # 良い例
   # preferred
   def some_function([]),
     do: :empty
@@ -153,7 +168,8 @@ If you're looking for other projects to contribute to please see the
     do: :very_long_line_here
   ```
 
-* If you have more than one multi-line `def`s do not use single-line `def`s.
+* 複数行 `def` がいくつかある場合は、1行 `def` は使わないこと
+  If you have more than one multi-line `def`s do not use single-line `def`s.
 
   ```elixir
   def some_function(nil) do
@@ -173,20 +189,26 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* Use the pipeline operator (`|>`) to chain functions together.
+* 関数をつなぐときはパイプライン `|>` を使う
+  Use the pipeline operator (`|>`) to chain functions together.
 
   ```elixir
+  # 良くない例
   # not preferred
   String.strip(String.downcase(some_string))
 
+  # 良い例
   # preferred
   some_string |> String.downcase |> String.strip
 
+  # パイプラインは複数行でもインデントしない
   # Multiline pipelines are not further indented
   some_string
   |> String.downcase
   |> String.strip
 
+  # パターンマッチの右辺に複数行のパイプラインがある場合は
+  # 右辺を改行した上でインデントする
   # Multiline pipelines on the right side of a pattern match
   # should be indented on a newline
   sanitized_string =
@@ -195,35 +217,45 @@ If you're looking for other projects to contribute to please see the
     |> String.strip
   ```
 
+* ↑がおすすめの記法ではあるけど、これをIExにコピペするとエラーになるので注意してほしい (IExの場合は次の行のパイプラインを認識せずに最初の行だけ評価してしまうので、シンタックスエラーになる)
   While this is the preferred method, take into account that copy-pasting
   multiline pipelines into IEx might result in a syntax error, as IEx will
   evaluate the first line without realizing that the next line has a pipeline.
 
-* Avoid using the pipeline operator just once.
+* パイプ演算子を1回しか使わないケースは避けるように
+  Avoid using the pipeline operator just once.
 
   ```elixir
+  # 良くない例
   # not preferred
   some_string |> String.downcase
 
+  # 良い例
   # preferred
   String.downcase(some_string)
   ```
 
-* Use _bare_ variables in the first part of a function chain.
+* 関数をつなげるとき、先頭に変数を置く
+  Use _bare_ variables in the first part of a function chain.
 
   ```elixir
+  # ダメ、ゼッタイ!!
+  # 構文的には String.strip("nope" |> String.downcase) と解釈される
   # THE WORST!
   # This actually parses as String.strip("nope" |> String.downcase).
   String.strip "nope" |> String.downcase
 
+  # 良くない例
   # not preferred
   String.strip(some_string) |> String.downcase |> String.codepoints
 
+  # 良い例
   # preferred
   some_string |> String.strip |> String.downcase |> String.codepoints
   ```
 
-* Avoid trailing whitespace.
+* 行末にスペースはつけないように
+  Avoid trailing whitespace.
 
 
 ### Syntax
