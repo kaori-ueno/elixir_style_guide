@@ -53,7 +53,7 @@ If you're looking for other projects to contribute to please see the
 [Hex package manager site][Hex].
 
 
-### Source Code Layout ソースコードの書き方
+### ソースコードの書き方 Source Code Layout
 
 <!-- TODO: Add crafty quote here -->
 
@@ -76,11 +76,11 @@ If you're looking for other projects to contribute to please see the
   ```
 
 * 改行はUNIX系のものを利用する。
-  (\*BSD/Solaris/Linux/OSXではデフォルトのUNIX系の改行コードであるが、Windowsユーザは注意が必要)
+  (\*BSD/Solaris/Linux/OSXではデフォルトがUNIX系の改行コードであるが、Windowsユーザは注意が必要)
   Use Unix-style line endings (\*BSD/Solaris/Linux/OSX users are covered by
   default, Windows users have to be extra careful).
 
-* gitを使っているなら、Windowsで改行コードが勝手に挿入されないように下記のような設定をするとよさそう。
+* gitを使っている場合は、Windowsで改行コードが勝手に挿入されないように下記のような設定をするとよさそう。
   If you're using Git you might want to add the following configuration
   setting to protect your project from Windows line endings creeping in:
 
@@ -128,7 +128,7 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* ただし、1行 `def` で同じ関数のマッチングを記述する場合はまとめる
+* ただし、同じ関数のマッチングを1行 `def` で定義する場合はまとめる。
   but run single-line `def`s that match for the same function together.
 
   ```elixir
@@ -139,7 +139,7 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* 関数定義で `do:` を使いたいけど、関数本体の記述が長くなる場合は、下記のように1行で書かずに `do:` 以下を改行してインデントを下げる
+* 関数定義で `do:` を使いたいけど、関数本体の記述が長くなる場合は、下記のように1行で書かずに `do:` 以下を改行してインデントを下げる。
   If you use the `do:` syntax with functions and the line that makes up the
   function body is long, put the `do:` on a new line indented one level more
   than the previous line.
@@ -149,7 +149,7 @@ If you're looking for other projects to contribute to please see the
     do: Enum.map(args, fn(arg) -> arg <> " is on a very long line!" end)
   ```
 
-  複数の関数定義が並んでいるときに上記のような記述をする場合は、他の関数定義も `do:` 以下を改行しよう
+  複数の関数定義が並んでいるときに上記のような記述をする場合は、他の関数定義も `do:` 以下を改行する。
   When you use the convention above and you have more than one function clause
   using the `do:` syntax, put the `do:` on a new line for each function clause:
 
@@ -168,7 +168,7 @@ If you're looking for other projects to contribute to please see the
     do: :very_long_line_here
   ```
 
-* 複数行 `def` がいくつかある場合は、1行 `def` は使わないこと
+* 複数行 `def` がいくつかある場合は、1行 `def` は使わないこと。
   If you have more than one multi-line `def`s do not use single-line `def`s.
 
   ```elixir
@@ -189,7 +189,7 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* 関数をつなぐときはパイプライン `|>` を使う
+* 関数をつなぐときはパイプライン `|>` を使う。
   Use the pipeline operator (`|>`) to chain functions together.
 
   ```elixir
@@ -217,12 +217,13 @@ If you're looking for other projects to contribute to please see the
     |> String.strip
   ```
 
-* ↑がおすすめの記法ではあるけど、これをIExにコピペするとエラーになるので注意してほしい (IExの場合は次の行のパイプラインを認識せずに最初の行だけ評価してしまうので、シンタックスエラーになる)
+* ↑が良い記法ではあるけど、これをIExにコピペするとエラーになるので注意すること。
+  (IExの場合は次の行のパイプラインを認識せずに最初の行だけ評価してしまうので、シンタックスエラーになる)
   While this is the preferred method, take into account that copy-pasting
   multiline pipelines into IEx might result in a syntax error, as IEx will
   evaluate the first line without realizing that the next line has a pipeline.
 
-* パイプ演算子を1回しか使わないケースは避けるように
+* パイプ演算子を1回しか使わないケースは避けるように。
   Avoid using the pipeline operator just once.
 
   ```elixir
