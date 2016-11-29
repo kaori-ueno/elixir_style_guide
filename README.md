@@ -259,58 +259,77 @@ If you're looking for other projects to contribute to please see the
   Avoid trailing whitespace.
 
 
-### Syntax
+### 構文 Syntax
 
-* Use parentheses when you have arguments, no parentheses when you don't.
+* 関数定義では、引数がある場合はカッコをつけて、引数がない場合はカッコをつけない。
+  Use parentheses when you have arguments, no parentheses when you don't.
 
   ```elixir
+  # 良くない例
   # not preferred
   def some_function arg1, arg2 do
+    # なんらかの処理
     # body omitted
   end
 
   def some_function() do
+    # なんらかの処理
     # body omitted
   end
 
+  # 良い例
   # preferred
   def some_function(arg1, arg2) do
+    # なんらかの処理
     # body omitted
   end
 
   def some_function do
+    # なんらかの処理
     # body omitted
   end
   ```
 
-* Never use `do:` for multi-line `if/unless`.
+* 複数行の `if/unless` では絶対に `do:` は使わない
+  Never use `do:` for multi-line `if/unless`.
 
   ```elixir
+  # 良くない例
   # not preferred
   if some_condition, do:
+    # なんらかの処理
+    # この場合は、ブロックの後に end をつけない
     # a line of code
     # another line of code
     # note no end in this block
 
+  # 良い例
   # preferred
   if some_condition do
+    # なんらかの
+    # 処理
     # some
     # lines
     # of code
   end
   ```
 
-* Use `do:` for single line `if/unless` statements.
+* 1行の `if/unless` 文では `do:` を使う
+  Use `do:` for single line `if/unless` statements.
 
   ```elixir
+  # 良い例
   # preferred
-  if some_condition, do: # some_stuff
+  if some_condition, do: # ほげほげ some_stuff
   ```
 
-* Never use `unless` with `else`.
+* `unless` を使う場合は `else` は使わないこと。
+  下記のように、真になる場合が先にくるように書き換える。
+　Never use `unless` with `else`.
   Rewrite these with the positive case first.
 
   ```elixir
+  # 良くない例
   # not preferred
   unless success? do
     IO.puts 'failure'
@@ -318,6 +337,7 @@ If you're looking for other projects to contribute to please see the
     IO.puts 'success'
   end
 
+  # 良い例
   # preferred
   if success? do
     IO.puts 'success'
@@ -326,7 +346,8 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* Always use `true` as the last condition of a `cond` statement.
+* `cond` 文の最後のケースは必ず `true` にする。
+  Always use `true` as the last condition of a `cond` statement.
 
   ```elixir
   cond do
@@ -339,75 +360,93 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* Never put a space between a function name and the opening parenthesis.
+* 関数名と開きカッコ `(` の間にスペースは入れない。
+  Never put a space between a function name and the opening parenthesis.
 
   ```elixir
+  # 良くない例
   # not preferred
   f (3 + 2) + 1
 
+  # 良い例
   # preferred
   f(3 + 2) + 1
   ```
 
-* Use parentheses in function calls, especially inside a pipeline.
+* 関数を呼び出すとき(特にパイプライン中に呼び出すとき)は、カッコ `()` を付けること。
+  Use parentheses in function calls, especially inside a pipeline.
 
   ```elixir
+  # 良くない例
   # not preferred
   f 3
 
+  # 良い例
   # preferred
   f(3)
 
+  # 書き方も悪いし `rem(2, (3 |> g))` と解釈されるので、意図通りにならない
   # not preferred and parses as rem(2, (3 |> g)), which is not what you want.
   2 |> rem 3 |> g
 
+  # 良い例
   # preferred
   2 |> rem(3) |> g
   ```
 
-* Omit parentheses in macro calls when a do block is passed.
+* マクロの呼び出しの際、`do` ブロックを囲うカッコは省略する
+  Omit parentheses in macro calls when a do block is passed.
 
   ```elixir
+  # 良くない例
   # not preferred
   quote(do
     foo
   end)
 
+  # 良い例
   # preferred
   quote do
     foo
   end
   ```
 
-* Optionally omit parentheses in function calls (outside a pipeline) when the
+* パイプラインの外で関数を呼び出す際、最後の引数が関数式であればカッコを省略してもよい
+  Optionally omit parentheses in function calls (outside a pipeline) when the
   last argument is a function expression.
 
   ```elixir
+  # 良い例
   # preferred
   Enum.reduce(1..10, 0, fn x, acc ->
     x + acc
   end)
 
+  # これも良い例
   # also preferred
   Enum.reduce 1..10, 0, fn x, acc ->
     x + acc
   end
   ```
 
-* Use parentheses for calls to functions with zero arity, so they can be
+* 引数がない関数はカッコを付けて呼び出すこと。
+  そうすると変数との見分けがつきやすい。
+  Use parentheses for calls to functions with zero arity, so they can be
   distinguished from variables.
 
   ```elixir
   defp do_stuff, do: ...
 
+  # 良くない書き方
   # not preferred
   def my_func do
-    do_stuff # is this a variable or a function call
+    do_stuff # 変数かな？関数呼び出しかな？ is this a variable or a function call
   end
 
+  # 良い書き方
   # preferred
   def my_func do
-    do_stuff() # this is clearly a function call
+    do_stuff() # 関数呼び出しですね、わかります this is clearly a function call
   end
   ```
 
