@@ -451,11 +451,13 @@ If you're looking for other projects to contribute to please see the
   ```
 
 
-### Naming
+### 命名 Naming
 
-* Use `snake_case` for atoms, functions and variables.
+* アトム、関数名、変数名にはスネークケース `snake_case` を使うこと
+  Use `snake_case` for atoms, functions and variables.
 
   ```elixir
+  # 良くない例
   # not preferred
   :"some atom"
   :SomeAtom
@@ -471,6 +473,7 @@ If you're looking for other projects to contribute to please see the
     ...
   end
 
+  # 良い例
   # preferred
   :some_atom
 
@@ -481,9 +484,12 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* Use `CamelCase` for modules (keep acronyms like HTTP, RFC, XML uppercase).
+* モジュール名はキャメルケース `CamelCase` にすること。
+  ただし、HTTPやRFC、XFMLなどの頭字語は大文字のままにする。
+  Use `CamelCase` for modules (keep acronyms like HTTP, RFC, XML uppercase).
 
   ```elixir
+  # 良くない例
   # not preferred
   defmodule Somemodule do
     ...
@@ -497,6 +503,7 @@ If you're looking for other projects to contribute to please see the
     ...
   end
 
+  # 良い例
   # preferred
   defmodule SomeModule do
     ...
@@ -507,7 +514,9 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* The names of predicate macros (compile-time generated functions that return a
+* _ガードなどで使うことのできる_述語マクロ(コンパイル時に生成される、ブール値を返す関数)の名前は、接頭辞を `is_` にするべきである。
+  ガード内で使うことのできる式は、[Expressions in Guard Clauses](http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses)に書かれている
+  The names of predicate macros (compile-time generated functions that return a
   boolean value) _that can be used within guards_ should be prefixed with `is_`.
   For a list of allowed expressions, see
   [Expressions in Guard Clauses](http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses).
@@ -518,21 +527,25 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* The names of predicate functions _that cannot be used within guards_ should
+* _ガードなどで使うことのできない_述語関数の名前は、 `is_` 始まりより、クエスチョンマーク `?` で終わる書き方の方が良い。
+  The names of predicate functions _that cannot be used within guards_ should
   have a trailing question mark (`?`) rather than the `is_` (or similar) prefix.
 
   ```elixir
   def cool?(var) do
+    # verがcoolであるかを判定する、単純な関数ではかけない複合的な処理
     # Complex check if var is cool not possible in a pure function.
   end
   ```
 
-* Private functions with the same name as public functions should start with
+* プライベート関数を、パブリック関数と同じ名前にしたいなら、先頭に `do_` をつけること。
+  Private functions with the same name as public functions should start with
   `do_`.
 
   ```elixir
   def sum(list), do: do_sum(list, 0)
 
+  # プライベート関数
   # private functions
   defp do_sum([], total), do: total
   defp do_sum([head|tail], total), do: do_sum(tail, head + total)
