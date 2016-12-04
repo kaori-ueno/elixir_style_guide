@@ -552,54 +552,71 @@ If you're looking for other projects to contribute to please see the
   ```
 
 
-### Comments
+### コメント Comments
 
-* Write self-documenting code and ignore the rest of this section.
+* この章の残りの部分が気にならなくなるくらい、セルフドキュメントなコードをしっかり書こう。
+  Write self-documenting code and ignore the rest of this section.
   Seriously!
 
-* Use one space between the leading `#` character of the comment and the text of
+* `#` とコメント文の間には、1つスペースを入れること。
+  Use one space between the leading `#` character of the comment and the text of
   the comment.
 
-* Comments longer than a word are capitalized and use punctuation.
+* 1単語より長いコメントを書く場合は、(英語の場合は先頭を大文字にして)句読点をつけること。
+  また、(これも英語の場合だけど)ピリオドの後は1つスペースをあけること。
+  Comments longer than a word are capitalized and use punctuation.
   Use [one space](http://en.wikipedia.org/wiki/Sentence_spacing) after periods.
 
   ```elixir
+  # 良くない例
   # not preferred
   String.upcase(some_string) # Capitalize string.
   ```
 
-#### Comment Annotations
+#### 注釈 Comment Annotations
 
-* Annotations should usually be written on the line immediately above the
+* 注釈は、常に関係あるコードの直前の行に書くべきである。
+  Annotations should usually be written on the line immediately above the
   relevant code.
 
-* The annotation keyword is followed by a colon and a space, then a note
+* 注釈ラベルのに後はコロンとスペースを書き、その後に問題について記載する。
+  The annotation keyword is followed by a colon and a space, then a note
   describing the problem.
 
-* If multiple lines are required to describe the problem, subsequent lines
+* 問題を複数行に渡って書く場合、2行目以降は `#` の後に2つスペースを入れてインデントすること。
+  If multiple lines are required to describe the problem, subsequent lines
   should be indented two spaces after the `#`.
 
-* In cases where the problem is so obvious that any documentation would be
+* ドキュメントにするのが無駄なくらい明らかな問題である場合は、問題となっているコードの行末に、詳細は書かずに注記だけを書いてもいい。
+  この使い方は例外的な書き方であって、ルールではない。
+  In cases where the problem is so obvious that any documentation would be
   redundant, annotations may be left at the end of the offending line with no
   note.
   This usage should be the exception and not the rule.
 
-* Use `TODO` to note missing features or functionality that should be added at a
+* `TODO` は、必要な特性や機能性がかけており、将来追加すべきであることを示すために使う。
+  Use `TODO` to note missing features or functionality that should be added at a
   later date.
 
-* Use `FIXME` to note broken code that needs to be fixed.
+* `FIXME` は、コードが壊れているため修正する必要があることを示すために使う。
+  Use `FIXME` to note broken code that needs to be fixed.
 
-* Use `OPTIMIZE` to note slow or inefficient code that may cause performance
+* `OPTIMIZE` は、パフォーマンスに影響するような遅いコード、もしくは非効率的なコードであることを示すために使う。
+  Use `OPTIMIZE` to note slow or inefficient code that may cause performance
   problems.
 
-* Use `HACK` to note code smells where questionable coding practices were used
+* `HACK` は、疑わしい実装がされており、後々リファクタする必要があることを示すために使う。
+  Use `HACK` to note code smells where questionable coding practices were used
   and should be refactored away.
 
-* Use `REVIEW` to note anything that should be looked at to confirm it is
+* `README` は、意図通りに動いているのか確認する必要があることを示すために使う。
+  (例: `REVIEW: クライアントが現在○○する方法はこれであってるよね？？？`)
+  Use `REVIEW` to note anything that should be looked at to confirm it is
   working as intended.
   For example: `REVIEW: Are we sure this is how the client does X currently?`
 
-* Use other custom annotation keywords if it feels appropriate, but be sure to
+* その他に適切だと思うものがあれば注記を追加しても良いが、 `README` かそれに対応するものにその注記について説明を書いておくこと。
+  Use other custom annotation keywords if it feels appropriate, but be sure to
   document them in your project's `README` or similar.
 
 
