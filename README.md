@@ -527,7 +527,7 @@ If you're looking for other projects to contribute to please see the
   end
   ```
 
-* _ガードなどで使うことのできない_述語関数の名前は、 `is_` 始まりより、クエスチョンマーク `?` で終わる書き方の方が良い。
+* _ガードなどで使うことのできない_述語関数の名前は、 `is_` 始まりより、クエスチョンマーク `?` で終わる名前の方が良い。
   The names of predicate functions _that cannot be used within guards_ should
   have a trailing question mark (`?`) rather than the `is_` (or similar) prefix.
 
